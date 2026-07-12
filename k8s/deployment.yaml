@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: vehicle-sales
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: vehicle-sales
+
+  template:
+    metadata:
+      labels:
+        app: vehicle-sales
+
+    spec:
+      containers:
+        - name: vehicle-sales
+          image: vehicle-sales-service:latest
+          imagePullPolicy: Never
+
+          ports:
+            - containerPort: 3001
