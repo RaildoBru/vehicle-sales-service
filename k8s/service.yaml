@@ -11,6 +11,6 @@ spec:
     app: vehicle-sales-service
 
   ports:
-    - port: ${PORT}
-    - targetPort: ${PORT}
-    - nodePort: ${NODE_PORT}
+    - port: 3001
+    - targetPort: 3001
+    - nodePort: 30080

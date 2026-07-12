@@ -23,4 +23,4 @@ spec:
           imagePullPolicy: Never
 
           ports:
-            - containerPort: ${PORT}
+            - containerPort: 3001
