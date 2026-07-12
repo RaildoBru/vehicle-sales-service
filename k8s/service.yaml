@@ -12,5 +12,5 @@ spec:
 
   ports:
     - port: ${PORT}
-      targetPort: ${PORT}
-      nodePort: ${NODE_PORT}
+    - targetPort: ${PORT}
+    - nodePort: ${NODE_PORT}
