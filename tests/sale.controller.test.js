@@ -7,7 +7,6 @@ import saleRoutes from '../src/routes/index.js';
 
 describe('Sale Controller Routes', () => {
   let app;
-
   beforeEach(() => {
     app = express();
     app.use(express.json());
@@ -26,14 +25,14 @@ describe('Sale Controller Routes', () => {
   });
 
   it('POST /sales should create sale and return 201', async () => {
-    const payload = { vehicleId: 'v1', cpf: '123' };
+    const payload = { vehicleId: 'v1', cpf: '45678901234' };
     SaleService.createSale = jest.fn().mockResolvedValue({ id: 's1' });
 
     const res = await request(app).post('/sales').send(payload);
 
     expect(res.status).toBe(201);
     expect(res.body).toEqual({ id: 's1' });
-    expect(SaleService.createSale).toHaveBeenCalledWith({ vehicleId: 'v1', buyerCpf: '123' });
+    expect(SaleService.createSale).toHaveBeenCalledWith({ vehicleId: 'v1', buyerCpf: '45678901234' });
   });
 
   it('POST /sales should return 400 on error', async () => {

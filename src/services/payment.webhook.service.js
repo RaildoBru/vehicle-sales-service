@@ -11,7 +11,8 @@ class PaymentWebhookService {
         if (!sale) {
             throw new Error('Sale not found');
         }
-        const statusPayment = status === 'approved' ? SaleStatus.APPROVED : SaleStatus.REJECTED;
+        
+        const statusPayment = status.toUpperCase() === 'APPROVED' ? SaleStatus.APPROVED : SaleStatus.REJECTED;
         await SaleRepository.updateStatus(
             sale._id,
             statusPayment

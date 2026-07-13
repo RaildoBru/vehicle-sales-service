@@ -20,7 +20,7 @@ class SaleRepository {
             throw new Error(`Failed to create sale: ${error.message}`);
         }
     }
-    
+
     async findByPaymentCode(paymentCode) {
         try {
             const sale = await Sale.findOne({ paymentCode });

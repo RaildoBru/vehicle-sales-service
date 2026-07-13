@@ -1,9 +1,12 @@
 import PaymentWebhookService from '../services/payment.webhook.service.js';
 
 class PaymentWebhookController {
-
     async handle(req, res) {
-        
+        const {
+                paymentCode,
+                status
+            } = req.body;
+
         try {
             const {
                 paymentCode,

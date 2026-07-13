@@ -19,10 +19,19 @@ const saleSchema = new mongoose.Schema(
       type: String,
       enum: Object.values(SaleStatus),
       default: SaleStatus.PENDING
+    },
+    createdAt: {
+      type: Date,
+      select: false
+    },
+    updatedAt: {
+      type: Date,
+      select: false
     }
   },
   {
-    timestamps: true
+    timestamps: true,
+    versionKey: false
   }
 );
 
