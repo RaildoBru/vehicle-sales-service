@@ -2,20 +2,17 @@ import PaymentWebhookService from '../services/payment.webhook.service.js';
 
 class PaymentWebhookController {
     async handle(req, res) {
+
         const {
                 paymentCode,
-                status
+                status,
+                event
             } = req.body;
 
         try {
-            const {
-                paymentCode,
-                status
-            } = req.body;
-
             await PaymentWebhookService.execute(
                 paymentCode,
-                status
+                status,
             );
 
             return res.status(200).json({
@@ -25,7 +22,7 @@ class PaymentWebhookController {
         } catch (error) {
 
             return res.status(400).json({
-                error: error.message
+                error: 'Invalid webhook payload'
             });
 
         }

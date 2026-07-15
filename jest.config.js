@@ -5,7 +5,11 @@ export default {
   collectCoverageFrom: [
     'src/**/*.js',
     '!src/server.js',
-    '!src/app.js'
+    '!src/app.js',
+    '!src/docs/*.swagger.js',
+    '!src/docs/health.swagger.js',
+    '!src/docs/sales.swagger.js',
+    '!src/docs/webhook.swagger.js'
   ],
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
