@@ -30,6 +30,6 @@ describe('PaymentWebhookController', () => {
     await PaymentWebhookController.handle(req, res);
 
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({ error: 'fail' });
+    expect(res.json).toHaveBeenCalledWith({ error: 'Invalid webhook payload' });
   });
 });
