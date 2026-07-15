@@ -24,6 +24,15 @@ describe('Sale Controller Routes', () => {
     expect(SaleService.getAllSales).toHaveBeenCalled();
   });
 
+  it('GET /sales should return 500 on error', async () => {
+    SaleService.getAllSales = jest.fn().mockRejectedValue(new Error('DB error'));
+
+    const res = await request(app).get('/sales');
+
+    expect(res.status).toBe(500);
+    expect(res.body).toHaveProperty('error');
+  });
+
   it('POST /sales should create sale and return 201', async () => {
     const payload = { vehicleId: 'v1', cpf: '45678901234' };
     SaleService.createSale = jest.fn().mockResolvedValue({ id: 's1' });
@@ -35,8 +44,35 @@ describe('Sale Controller Routes', () => {
     expect(SaleService.createSale).toHaveBeenCalledWith({ vehicleId: 'v1', buyerCpf: '45678901234' });
   });
 
-  it('POST /sales should return 400 on error', async () => {
+  it('POST /sales should return 400 on invalid cpf', async () => {
     const payload = { vehicleId: 'v1', cpf: '123' };
+
+    const res = await request(app).post('/sales').send(payload);
+
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({ error: 'Invalid CPF' });
+  });
+
+  it('POST /sales should return 400 when missing vehicleId', async () => {
+    const payload = { cpf: '45678901234' };
+
+    const res = await request(app).post('/sales').send(payload);
+
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({ error: 'vehicleId and cpf are required' });
+  });
+
+  it('POST /sales should return 400 when missing cpf', async () => {
+    const payload = { vehicleId: 'v1' };
+
+    const res = await request(app).post('/sales').send(payload);
+
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({ error: 'vehicleId and cpf are required' });
+  });
+
+  it('POST /sales should return 400 on service error', async () => {
+    const payload = { vehicleId: 'v1', cpf: '45678901234' };
     SaleService.createSale = jest.fn().mockRejectedValue(new Error('bad data'));
 
     const res = await request(app).post('/sales').send(payload);
