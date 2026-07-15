@@ -1,0 +1,39 @@
+name: 🧪 CI - Build & Test
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - qa
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:8
+        ports:
+          - 27017:27017
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create .env
+        run: |
+          echo "MONGODB_URI=mongodb://localhost:27017/testdb" >> .env
+
+      - name: Run tests
+        run: npm test

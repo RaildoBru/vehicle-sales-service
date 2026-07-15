@@ -1,0 +1,47 @@
+networks:
+  vehicle-network:
+    name: vehicle-network
+    driver: bridge
+    #external: false
+services:
+  
+  app:
+    build: .
+    container_name: vehicle-sales-service
+
+    ports:
+      - "${PORT}:${PORT}"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+
+    depends_on:
+      - mongodb
+    
+    networks:
+      - vehicle-network
+
+  mongodb:
+    image: mongo:7.0
+
+    container_name: vehicle-sales-mongodb
+    restart: always
+
+    environment:
+      MONGO_INITDB_DATABASE: vehicle_sales
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+    ports:
+      - "27017:27017"
+
+    volumes:
+      - vehicle_sales_mongodb_data:/data/db
+  
+    networks:
+      - vehicle-network
+
+volumes:
+  vehicle_sales_mongodb_data:
