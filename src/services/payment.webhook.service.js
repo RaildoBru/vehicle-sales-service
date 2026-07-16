@@ -4,7 +4,7 @@ import SaleStatus from '../enums/sale-status.enum.js';
 
 class PaymentWebhookService {
 
-    async execute(paymentCode, status) {
+    async execute(paymentCode, event) {
 
         const sale = await SaleRepository.findByPaymentCode(paymentCode);
 
@@ -12,9 +12,9 @@ class PaymentWebhookService {
             throw new Error('Sale not found');
         }
 
-        const statusPayment = status.toLowerCase() === 'payment_approved' ? 
+        const statusPayment = event.toLowerCase() === 'payment_approved' ?
             SaleStatus.APPROVED : SaleStatus.REJECTED;
-
+        console.log(statusPayment);
         await SaleRepository.updateStatus(
             sale._id,
             statusPayment
