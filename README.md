@@ -65,7 +65,7 @@ Graças ao uso do Docker, você não precisa instalar o banco de dados ou depend
 4.  **Acessar a aplicação:**
     A API estará disponível em: `http://localhost:[PORTA_DA_SUA_APP]` (ex: `http://localhost:3000`).
 
-5. ** Url Api **
+5. **Url Api**
     http://localhost:3001/api/health
     http://localhost:3001/api-docs
 ---
