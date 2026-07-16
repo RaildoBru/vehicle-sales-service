@@ -12,7 +12,7 @@ class PaymentWebhookController {
         try {
             await PaymentWebhookService.execute(
                 paymentCode,
-                status,
+                event,
             );
 
             return res.status(200).json({
