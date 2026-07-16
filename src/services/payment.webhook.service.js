@@ -14,7 +14,7 @@ class PaymentWebhookService {
 
         const statusPayment = event.toLowerCase() === 'payment_approved' ?
             SaleStatus.APPROVED : SaleStatus.REJECTED;
-        console.log(statusPayment);
+
         await SaleRepository.updateStatus(
             sale._id,
             statusPayment
