@@ -11,12 +11,12 @@ describe('PaymentWebhookController', () => {
   it('should return 200 when service executes successfully', async () => {
     PaymentWebhookService.execute = jest.fn().mockResolvedValue();
 
-    const req = { body: { paymentCode: 'PC', status: 'PAID' } };
+    const req = { body: { paymentCode: 'PC', event: 'payment_approved' } };
     const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
 
     await PaymentWebhookController.handle(req, res);
 
-    expect(PaymentWebhookService.execute).toHaveBeenCalledWith('PC', 'PAID');
+    expect(PaymentWebhookService.execute).toHaveBeenCalledWith('PC', 'payment_approved');
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({ message: 'Webhook processed successfully' });
   });
@@ -24,7 +24,7 @@ describe('PaymentWebhookController', () => {
   it('should return 400 when service throws', async () => {
     PaymentWebhookService.execute = jest.fn().mockRejectedValue(new Error('fail'));
 
-    const req = { body: { paymentCode: 'PC', status: 'FAILED' } };
+    const req = { body: { paymentCode: 'PC', event: 'payment_failed' } };
     const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
 
     await PaymentWebhookController.handle(req, res);
